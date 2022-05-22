@@ -2,8 +2,6 @@ const dotenv = require("dotenv");
 const express = require("express");
 const cros = require("cors");
 
-const db = require("./models/index.js");
-
 /** require all routes */
 const TutorialRoutes = require("./routes/tutorial.routes");
 
@@ -11,19 +9,6 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.EXPRESS_SERVER_PORT || 5000;
-
-db.mongoose
-  .connect(db.url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("connected to the monogodb successfully.");
-  })
-  .catch((error) => {
-    console.log("error connecting to the monogodb -> ", error);
-    process.exit();
-  });
 
 /**
  * cors -> cross-origin resource sharing
@@ -38,10 +23,10 @@ app.use(express.json());
 /* parse requests of content-type - application/x-www-form-urlencoded */
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api/v1/tutorials", TutorialRoutes);
-
 app.listen(PORT, () => console.log(`server is running on port: ${PORT}`));
 
 app.get("/", (req, res) => {
   res.json({ message: "express server is running." });
 });
+
+app.use("/api/v1/tutorials", TutorialRoutes);
