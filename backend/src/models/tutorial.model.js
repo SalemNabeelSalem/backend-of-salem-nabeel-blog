@@ -1,4 +1,4 @@
-module.exports = (mongoose) => {
+module.exports = mongoose => {
   let tutorialSchema = mongoose.Schema(
     {
       title: String,
@@ -9,7 +9,7 @@ module.exports = (mongoose) => {
     }
   );
 
-  tutorialSchema.methods("toJSON", function () {
+  tutorialSchema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
 
     object.id = _id;

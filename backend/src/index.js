@@ -4,7 +4,8 @@ const cros = require("cors");
 
 const db = require("./models/index.js");
 
-require("./routes/tutorial.routes.js")(app);
+/** require all routes */
+const TutorialRoutes = require("./routes/tutorial.routes");
 
 dotenv.config();
 
@@ -37,9 +38,10 @@ app.use(express.json());
 /* parse requests of content-type - application/x-www-form-urlencoded */
 app.use(express.urlencoded({ extended: true }));
 
+app.use("/api/v1/tutorials", TutorialRoutes);
+
 app.listen(PORT, () => console.log(`server is running on port: ${PORT}`));
 
 app.get("/", (req, res) => {
   res.json({ message: "express server is running." });
 });
-

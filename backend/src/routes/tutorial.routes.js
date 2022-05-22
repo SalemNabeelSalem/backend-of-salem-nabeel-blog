@@ -1,21 +1,19 @@
-module.exports = (app) => {
-  const tutorial = require("../controllers/tutorial.controller.js");
+const TutorialController = require("../controllers/tutorial.controller.js");
 
-  let router = require("express").Router();
+const TutorialRoutes = require("express").Router();
 
-  router.post("/", tutorial.create);
+TutorialRoutes.post("/", TutorialController.create);
 
-  router.get("/", tutorial.findAll);
+TutorialRoutes.get("/", TutorialController.findAll);
 
-  router.get("/:id", tutorial.findOne);
+TutorialRoutes.get("/:id", TutorialController.findOne);
 
-  router.get("/:title", tutorial.findAllByTitle);
+TutorialRoutes.get("/:title", TutorialController.findAllByTitle);
 
-  router.put("/:id", tutorial.update);
+TutorialRoutes.put("/:id", TutorialController.update);
 
-  router.delete("/:id", tutorial.delete);
+TutorialRoutes.delete("/:id", TutorialController.delete);
 
-  router.delete("/", tutorial.deleteAll);
+TutorialRoutes.delete("/", TutorialController.deleteAll);
 
-  app.use("/api/tutorial", router);
-};
+module.exports = TutorialRoutes;
