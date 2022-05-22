@@ -1,23 +1,30 @@
-module.exports = mongoose => {
-  let tutorialSchema = mongoose.Schema(
-    {
-      title: String,
-      description: String,
+const mongoose = require("mongoose");
+
+const TutorialSchema = mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
     },
-    {
-      timestamps: true,
-    }
-  );
 
-  tutorialSchema.method("toJSON", function () {
-    const { __v, _id, ...object } = this.toObject();
+    description: {
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-    object.id = _id;
+TutorialSchema.method("toJSON", function () {
+  const { __v, _id, ...object } = this.toObject();
 
-    return object;
-  });
+  object.id = _id;
 
-  const Tutorial = mongoose.model("tutorial", tutorialSchema);
+  return object;
+});
 
-  return Tutorial;
-};
+const TutorialModel = mongoose.model("tutorial", TutorialSchema);
+
+module.exports = TutorialModel;

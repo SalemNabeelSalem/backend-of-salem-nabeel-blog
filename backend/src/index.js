@@ -1,11 +1,13 @@
-const dotenv = require("dotenv");
+require("dotenv").config();
+
+require("./configs/mongodb.config");
+
 const express = require("express");
+
 const cros = require("cors");
 
 /** require all routes */
 const TutorialRoutes = require("./routes/tutorial.routes");
-
-dotenv.config();
 
 const app = express();
 const PORT = process.env.EXPRESS_SERVER_PORT || 5000;

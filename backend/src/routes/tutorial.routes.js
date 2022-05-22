@@ -8,8 +8,6 @@ TutorialRoutes.get("/", TutorialController.findAll);
 
 TutorialRoutes.get("/:id", TutorialController.findOne);
 
-TutorialRoutes.get("/:title", TutorialController.findAllByTitle);
-
 TutorialRoutes.put("/:id", TutorialController.update);
 
 TutorialRoutes.delete("/:id", TutorialController.delete);

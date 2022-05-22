@@ -1,6 +1,4 @@
-const db = require("../models/index.js");
-
-const Tutorial = db.tutorials;
+const TutorialModel = require("../models/tutorial.model");
 
 /** create a new tutorial */
 exports.create = (req, res) => {
@@ -15,8 +13,7 @@ exports.create = (req, res) => {
     return;
   }
 
-  /** create a new tutorial */
-  const tutorial = new Tutorial({
+  const tutorial = new TutorialModel({
     title: req.body.title,
     description: req.body.description,
   });
@@ -37,24 +34,44 @@ exports.create = (req, res) => {
 
 /** retrieve all tutorials */
 exports.findAll = (req, res) => {
-  /** retrieve all tutorials from the database */
-  Tutorial.find()
-    .then((tutorials) => {
-      res.send(tutorials);
-    })
-    .catch((error) => {
-      res.status(500).send({
-        message:
-          error.message || "some error occurred while retrieving tutorials.",
+  let title = req.query.title;
+
+  /** retrieve all tutorials with a title containing the search term */
+  if (title) {
+    let condition = title
+      ? { title: { $regex: new RegExp(title), $options: "i" } }
+      : {};
+
+    TutorialModel.find(condition)
+      .then((tutorials) => {
+        res.send(tutorials);
+      })
+      .catch((error) => {
+        res.status(500).send({
+          message:
+            error.message || "some error occurred while retrieving tutorials.",
+        });
       });
-    });
+  } else {
+    /** retrieve all tutorials from the database */
+    TutorialModel.find()
+      .then((tutorials) => {
+        res.send(tutorials);
+      })
+      .catch((error) => {
+        res.status(500).send({
+          message:
+            error.message || "some error occurred while retrieving tutorials.",
+        });
+      });
+  }
 };
 
 /** find a single tutorial with an id */
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Tutorial.findById(id)
+  TutorialModel.findById(id)
     .then((tutorial) => {
       if (!tutorial) {
         res.status(404).send({ message: "tutorial not found with id: " + id });
@@ -64,27 +81,7 @@ exports.findOne = (req, res) => {
     })
     .catch((error) => {
       res.status(500).send({
-        message: "error retrieving tutorial with id: " + id,
-      });
-    });
-};
-
-/** retrieve all tutorials with a title containing the search term */
-exports.findAllByTitle = (req, res) => {
-  const title = req.params.title;
-
-  let condition = title
-    ? { title: { $regex: new RegExp(title), $options: "i" } }
-    : {};
-
-  Tutorial.find(condition)
-    .then((tutorials) => {
-      res.send(tutorials);
-    })
-    .catch((error) => {
-      res.status(500).send({
-        message:
-          error.message || "some error occurred while retrieving tutorials.",
+        message: error.message || "error retrieving tutorial with id: " + id,
       });
     });
 };
@@ -99,7 +96,7 @@ exports.update = (req, res) => {
 
   const id = req.params.id;
 
-  Tutorial.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+  TutorialModel.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
     .then((tutorial) => {
       if (!tutorial) {
         res.status(404).send({
@@ -111,7 +108,7 @@ exports.update = (req, res) => {
     })
     .catch((error) => {
       res.status(500).send({
-        message: "error updating tutorial with id = " + id,
+        message: error.message || "error updating tutorial with id = " + id,
       });
     });
 };
@@ -120,7 +117,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  Tutorial.findByIdAndRemove(id)
+  TutorialModel.findByIdAndRemove(id)
     .then((tutorial) => {
       if (!tutorial) {
         res.status(404).send({
@@ -132,14 +129,14 @@ exports.delete = (req, res) => {
     })
     .catch((error) => {
       res.status(500).send({
-        message: "could not delete tutorial with id = " + id,
+        message: error.message || "could not delete tutorial with id = " + id,
       });
     });
 };
 
 /** delete all tutorials */
 exports.deleteAll = (req, res) => {
-  Tutorial.deleteMany({})
+  TutorialModel.deleteMany({})
     .then((tutorials) => {
       res.send({
         message: `${tutorials.deletedCount} tutorials were deleted!`,
