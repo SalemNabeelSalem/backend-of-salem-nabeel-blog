@@ -30,7 +30,12 @@ app.use(express.urlencoded({ extended: true }));
 app.listen(PORT, () => console.log(`server is running on port: ${PORT}`));
 
 app.get("/", (req, res) => {
-  res.json({ message: "express server is running." });
+  let response = {
+    message: "express server is running.",
+    health: "ok",
+  };
+
+  res.json(response);
 });
 
 app.use("/api/v1/tutorials", TutorialRoutes);
