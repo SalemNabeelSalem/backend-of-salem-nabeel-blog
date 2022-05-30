@@ -1,4 +1,4 @@
-const TutorialController = require("../controllers/tutorial.controller.js");
+const TutorialController = require("../controllers/tutorial.controller");
 
 const TutorialRoutes = require("express").Router();
 

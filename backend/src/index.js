@@ -16,6 +16,11 @@ const cros = require("cors");
  * */
 const helmet = require("helmet");
 
+/**
+ * morgan is a middleware for logging HTTP requests.
+ * */
+const morgan = require("morgan");
+
 /** require all routes */
 const TutorialRoutes = require("./routes/tutorial.routes");
 
@@ -38,6 +43,9 @@ app.use(express.urlencoded({ extended: true }));
 /** secure your express application by setting various HTTP headers */
 app.use(helmet());
 
+/** log HTTP requests */
+app.use(morgan("common"));
+
 app.listen(PORT, () => console.log(`server is running on port: ${PORT}`));
 
 app.get("/", (req, res) => {
@@ -46,7 +54,7 @@ app.get("/", (req, res) => {
     health: "ok",
   };
 
-  res.json(response);
+  res.json(response).status(200);
 });
 
 app.use("/api/v1/tutorials", TutorialRoutes);
