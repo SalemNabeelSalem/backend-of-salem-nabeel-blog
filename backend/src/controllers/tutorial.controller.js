@@ -1,8 +1,7 @@
+const { options } = require("joi");
 const TutorialModel = require("../models/tutorial.model");
 
-/** create a new tutorial */
 exports.create = (req, res) => {
-  /** validate the request */
   if (!req.body.title) {
     // http status code 400: bad request
     res.status(400).send({ message: "title can not be empty." });
@@ -21,11 +20,18 @@ exports.create = (req, res) => {
     return;
   }
 
+  if (!req.body.author) {
+    // http status code 400: bad request
+    res.status(400).send({ message: "author can not be empty." });
+    return;
+  }
+
   /** blueprint for a new tutorial */
   const tutorial = new TutorialModel({
     title: req.body.title,
     description: req.body.description,
     section: req.body.section,
+    author: req.body.author,
   });
 
   /** save tutorial in the database */
@@ -44,7 +50,6 @@ exports.create = (req, res) => {
     });
 };
 
-/** retrieve all tutorials */
 exports.findAll = (req, res) => {
   let title = req.query.title;
 
@@ -55,8 +60,12 @@ exports.findAll = (req, res) => {
       : {};
 
     TutorialModel.find(condition)
+      .populate({
+        path: "author",
+        select: "name email -_id",
+      })
       .sort({ created_at: -1 }) // -1 for descending order
-      .select("id title description section created_at") // select only the fields that we need
+      .select("id title description section author created_at") // select only the fields that we need
       .then((tutorials) => {
         // http status code 200: ok
         res.send(tutorials);
@@ -82,8 +91,11 @@ exports.findAll = (req, res) => {
 
     /** retrieve all tutorials from the database */
     TutorialModel.find()
+      .populate({
+        path: "author",
+        select: "name email -_id",
+      })
       .sort({ created_at: -1 }) // -1 for descending order
-      .select("id title description section created_at") // select only the fields that we need
       .then((tutorials) => {
         // http status code 200: ok
         res.send({
@@ -106,6 +118,10 @@ exports.findOne = (req, res) => {
   const id = req.params.id;
 
   TutorialModel.findById(id)
+    .populate({
+      path: "author",
+      select: "name email -_id",
+    })
     .then((tutorial) => {
       if (!tutorial) {
         // http status code 404: not found
@@ -140,10 +156,15 @@ exports.update = (req, res) => {
       title: req.body.title,
       description: req.body.description,
       section: req.body.section,
+      author: req.body.author,
     },
     {
       useFindAndModify: false, // this is to avoid deprecation warning
       new: true, // return the updated tutorial
+      populate: {
+        path: "author",
+        select: "name email -_id",
+      },
     }
   )
     .then((tutorial) => {

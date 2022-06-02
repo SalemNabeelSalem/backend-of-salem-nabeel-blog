@@ -23,6 +23,7 @@ const morgan = require("morgan");
 
 /** require all routes */
 const TutorialRoutes = require("./routes/tutorial.routes");
+const AuthorRoutes = require("./routes/author.routes");
 
 const app = express();
 const PORT = process.env.EXPRESS_SERVER_PORT || 5000;
@@ -58,3 +59,4 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/tutorials", TutorialRoutes);
+app.use("/api/v1/authors", AuthorRoutes);

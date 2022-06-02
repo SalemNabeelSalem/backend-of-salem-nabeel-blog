@@ -23,6 +23,11 @@ const TutorialSchema = mongoose.Schema(
       enum: ["backend", "frontend", "mobile", "fullstack"],
       required: true,
     },
+
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "author"
+    },
   },
   {
     timestamps: {
