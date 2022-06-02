@@ -4,11 +4,23 @@ const TutorialSchema = mongoose.Schema(
   {
     title: {
       type: String,
+      lowercase: true,
+      trim: true, // remove leading and leading spaces
+      minLength: [3, "title must be at least 3 characters long"],
+      maxLength: [50, "title must be less than 50 characters long"],
       required: true,
     },
 
     description: {
       type: String,
+      lowercase: true,
+      trim: true, // remove leading and leading spaces
+      required: true,
+    },
+
+    section: {
+      type: String,
+      enum: ["backend", "frontend", "mobile", "fullstack"],
       required: true,
     },
   },

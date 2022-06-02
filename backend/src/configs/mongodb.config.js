@@ -11,5 +11,5 @@ mongoose
     console.log("connected to the monogodb successfully.");
   })
   .catch((error) => {
-    console.log("error connecting to the monogodb -> ", error);
+    console.error("error connecting to the monogodb -> ", error);
   });
