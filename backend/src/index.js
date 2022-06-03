@@ -6,6 +6,12 @@ require("./configs/mongodb.config");
 
 const express = require("express");
 
+/** 
+ * Swagger Documentation
+ * */
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpecification = require("./configs/swagger.config");
+
 /**
  * cros is a middleware that allows cross-origin requests.
  * */
@@ -58,5 +64,6 @@ app.get("/", (req, res) => {
   res.json(response).status(200);
 });
 
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecification));
 app.use("/api/v1/tutorials", TutorialRoutes);
 app.use("/api/v1/authors", AuthorRoutes);

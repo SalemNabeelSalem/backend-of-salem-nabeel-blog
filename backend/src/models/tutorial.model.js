@@ -26,7 +26,7 @@ const TutorialSchema = mongoose.Schema(
 
     author: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "author"
+      ref: "author",
     },
   },
   {

@@ -4,6 +4,20 @@ const TutorialRoutes = require("express").Router();
 
 TutorialRoutes.post("/", TutorialController.create);
 
+/**
+ * @swagger
+ * /tutorials:
+ *  get:
+ *    tags:
+ *      - tutorial
+ *    summary: retreive all tutorials
+ *    description: retreive all tutorials
+ *    produces:
+ *      - application/json
+ *    responses:
+ *      200:
+ *        description: A successful response
+ */
 TutorialRoutes.get("/", TutorialController.findAll);
 
 TutorialRoutes.get("/:id", TutorialController.findOne);
