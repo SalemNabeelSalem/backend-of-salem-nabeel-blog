@@ -1,8 +1,11 @@
 const UserModel = require("../models/user.model");
+
 const {
   UserSchemaValidationWhenRegister,
   UserSchemaValidationWhenLogin,
 } = require("../middleware/user.validation");
+
+const bycript = require("bcryptjs");
 
 exports.registre = async (req, res) => {
   if (!req.body.full_name) {
@@ -54,7 +57,8 @@ exports.registre = async (req, res) => {
       // http status code 500: internal server error
       res.status(500).send({
         message:
-          error.message || "some error occurred while finding the user by email address.",
+          error.message ||
+          "some error occurred while finding the user by email address.",
       });
     });
 
@@ -63,6 +67,14 @@ exports.registre = async (req, res) => {
     res.status(400).send({ message: "user already exist." });
     return;
   }
+
+  // hash the password
+  const salt = await bycript.genSalt(10);
+  const hashedPassword = await bycript.hash(user.password, salt);
+
+  user.password = hashedPassword;
+
+  // const decryptedPassword = await bycript.compare("12345", hashedPassword);
 
   /** save user in the database */
   await user
