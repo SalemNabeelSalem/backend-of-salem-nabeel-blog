@@ -1,7 +1,10 @@
-const UserSchemaValidationWhenCreate = require("../middleware/user.validation");
 const UserModel = require("../models/user.model");
+const {
+  UserSchemaValidationWhenRegister,
+  UserSchemaValidationWhenLogin,
+} = require("../middleware/user.validation");
 
-exports.registre = (req, res) => {
+exports.registre = async (req, res) => {
   if (!req.body.full_name) {
     // http status code 400: bad request
     res.status(400).send({ message: "full_name can not be empty." });
@@ -26,7 +29,7 @@ exports.registre = (req, res) => {
     password: req.body.password,
   };
 
-  let userValidated = UserSchemaValidationWhenCreate.validate(userRequest);
+  let userValidated = UserSchemaValidationWhenRegister.validate(userRequest);
 
   if (userValidated.error) {
     // http status code 400: bad request
@@ -41,8 +44,28 @@ exports.registre = (req, res) => {
     password: userValidated.value.password,
   });
 
+  const userExist = await UserModel.findOne({
+    email: userValidated.value.email,
+  })
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => {
+      // http status code 500: internal server error
+      res.status(500).send({
+        message:
+          error.message || "some error occurred while finding the user by email address.",
+      });
+    });
+
+  if (userExist) {
+    // http status code 400: bad request
+    res.status(400).send({ message: "user already exist." });
+    return;
+  }
+
   /** save user in the database */
-  user
+  await user
     .save()
     .then((data) => {
       // exclude password from the response
