@@ -40,4 +40,6 @@ const UserRoutes = require("express").Router();
  */
 UserRoutes.post("/register", UserController.registre);
 
+UserRoutes.post("/login", UserController.login);
+
 module.exports = UserRoutes;

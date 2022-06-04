@@ -94,3 +94,74 @@ exports.registre = async (req, res) => {
       });
     });
 };
+
+exports.login = async (req, res) => {
+  if (!req.body.email) {
+    // http status code 400: bad request
+    res.status(400).send({ message: "email can not be empty." });
+    return;
+  }
+
+  if (!req.body.password) {
+    // http status code 400: bad request
+    res.status(400).send({ message: "password can not be empty." });
+    return;
+  }
+
+  let userLoginRequest = {
+    email: req.body.email,
+    password: req.body.password,
+  };
+
+  let userLoginValidated =
+    UserSchemaValidationWhenLogin.validate(userLoginRequest);
+
+  if (userLoginValidated.error) {
+    // http status code 400: bad request
+    res
+      .status(400)
+      .send({ message: userLoginValidated.error.details[0].message });
+    return;
+  }
+
+  const user = await UserModel.findOne({
+    email: userLoginValidated.value.email,
+  })
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => {
+      // http status code 500: internal server error
+      res.status(500).send({
+        message:
+          error.message ||
+          "some error occurred while finding the user by email address.",
+      });
+    });
+
+  if (!user) {
+    // http status code 400: bad request
+    res
+      .status(400)
+      .send({ message: "the user does not exist, please register." });
+    return;
+  }
+
+  // compare the password
+  const isPasswordMatched = await bycript.compare(
+    userLoginValidated.value.password,
+    user.password
+  );
+
+  if (!isPasswordMatched) {
+    // http status code 400: bad request
+    res.status(400).send({ message: "password is incorrect." });
+    return;
+  }
+
+  // exclude password from the response
+  user.password = undefined;
+
+  // http status code 200: ok
+  res.send(user);
+};
