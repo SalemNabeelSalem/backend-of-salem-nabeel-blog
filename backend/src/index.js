@@ -6,12 +6,6 @@ require("./configs/mongodb.config");
 
 const express = require("express");
 
-/** 
- * Swagger Documentation
- * */
-const swaggerUi = require("swagger-ui-express");
-const swaggerSpecification = require("./configs/swagger.config");
-
 /**
  * cros is a middleware that allows cross-origin requests.
  * */
@@ -27,7 +21,14 @@ const helmet = require("helmet");
  * */
 const morgan = require("morgan");
 
-/** require all routes */
+/**
+ * swagger documentation
+ * */
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpecification = require("./configs/swagger.config");
+
+/** all routes */
+const UserRoutes = require("./routes/user.routes");
 const TutorialRoutes = require("./routes/tutorial.routes");
 const AuthorRoutes = require("./routes/author.routes");
 
@@ -53,7 +54,11 @@ app.use(helmet());
 /** log HTTP requests */
 app.use(morgan("common"));
 
-app.listen(PORT, () => console.log(`server is running on port: ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`server is running on http://localhost:${PORT}`);
+
+  console.log(`swagger-ui is running on http://localhost:${PORT}/api/docs`);
+});
 
 app.get("/", (req, res) => {
   let response = {
@@ -64,6 +69,7 @@ app.get("/", (req, res) => {
   res.json(response).status(200);
 });
 
-app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecification));
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecification));
+app.use("/api/v1/users", UserRoutes);
 app.use("/api/v1/tutorials", TutorialRoutes);
 app.use("/api/v1/authors", AuthorRoutes);

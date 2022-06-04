@@ -1,4 +1,3 @@
-const { options } = require("joi");
 const TutorialModel = require("../models/tutorial.model");
 
 exports.create = (req, res) => {
