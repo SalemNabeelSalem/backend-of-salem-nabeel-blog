@@ -17,7 +17,7 @@ const AuthorRoutes = require("express").Router();
  *    parameters:
  *      - in: body
  *        name: AuthorRequest
- *        description: author input data.
+ *        description: author request.
  *        required: true
  *        schema:
  *          type: object

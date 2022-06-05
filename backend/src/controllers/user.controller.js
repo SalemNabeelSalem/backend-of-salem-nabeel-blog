@@ -5,6 +5,8 @@ const {
   UserSchemaValidationWhenLogin,
 } = require("../middleware/user.validation");
 
+const generateJsonWebToken = require("../middleware/jwt.validation");
+
 const bycript = require("bcryptjs");
 
 exports.registre = async (req, res) => {
@@ -159,9 +161,11 @@ exports.login = async (req, res) => {
     return;
   }
 
-  // exclude password from the response
-  user.password = undefined;
+  // generate jwt token
+  const token = generateJsonWebToken(user);
 
-  // http status code 200: ok
-  res.send(user);
+  res.header("x-authorization", token).send({
+    message: "user logged in successfully.",
+    token: token,
+  });
 };

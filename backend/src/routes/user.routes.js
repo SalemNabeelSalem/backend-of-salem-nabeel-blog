@@ -8,16 +8,16 @@ const UserRoutes = require("express").Router();
  *  post:
  *    tags:
  *      - user
- *    summary: create new user.
- *    description: create new user.
+ *    summary: user registeration.
+ *    description: user registeration.
  *    consumes:
  *      - application/json
  *    produces:
  *      - application/json
  *    parameters:
  *      - in: body
- *        name: UserRequest
- *        description: user input data.
+ *        name: UserRegisterationRequest
+ *        description: user registeration request.
  *        required: true
  *        schema:
  *          type: object
@@ -40,6 +40,38 @@ const UserRoutes = require("express").Router();
  */
 UserRoutes.post("/register", UserController.registre);
 
+/**
+ * @swagger
+ * /users/login:
+ *  post:
+ *    tags:
+ *      - user
+ *    summary: user login.
+ *    description: user login.
+ *    consumes:
+ *      - application/json
+ *    produces:
+ *      - application/json
+ *    parameters:
+ *      - in: body
+ *        name: UserLoginRequest
+ *        description: user login request.
+ *        required: true
+ *        schema:
+ *          type: object
+ *          properties:
+ *            email:
+ *              type: string
+ *              description: user email address.
+ *              example: jhon_doe@gmail.com
+ *            password:
+ *              type: string
+ *              description: user password.
+ *              example: 12345678
+ *    responses:
+ *      200:
+ *        description: A successful response
+ */
 UserRoutes.post("/login", UserController.login);
 
 module.exports = UserRoutes;
