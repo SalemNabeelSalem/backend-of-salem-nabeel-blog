@@ -5,19 +5,19 @@ const TutorialRoutes = require("express").Router();
 TutorialRoutes.post("/", TutorialController.create);
 
 /**
- * @swagger
+ * /** @swagger
  * tags:
  *   name: tutorial
  *   description: apis for tutorial management.
  */
 
 /**
- * @swagger
+ * /** @swagger
  * /tutorials:
  *  get:
  *    tags: [tutorial]
- *    summary: retreive all tutorials
- *    description: retreive all tutorials
+ *    summary: retreive all tutorials.
+ *    description: retreive all tutorials.
  *    produces:
  *      - application/json
  *    responses:

@@ -72,6 +72,6 @@ app.get("/", (req, res) => {
 
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecification));
 app.use("/api/v1", ProtectedRoutes);
-app.use("/api/v1", UserRoutes);
+app.use("/api/v1/users", UserRoutes);
 app.use("/api/v1/tutorials", TutorialRoutes);
 app.use("/api/v1/authors", AuthorRoutes);

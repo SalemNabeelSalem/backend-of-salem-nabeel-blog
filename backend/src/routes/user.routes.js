@@ -11,7 +11,7 @@ const UserRoutes = require("express").Router();
 
 /**
  * @swagger
- * /public/users/register:
+ * /users/register:
  *  post:
  *    tags: [user]
  *    summary: user registeration.
@@ -44,11 +44,11 @@ const UserRoutes = require("express").Router();
  *      200:
  *        description: A successful response
  */
-UserRoutes.post("/public/users/register", UserController.registre);
+UserRoutes.post("/register", UserController.registre);
 
 /**
  * @swagger
- * /public/users/login:
+ * /users/login:
  *  post:
  *    tags: [user]
  *    summary: user login.
@@ -77,6 +77,6 @@ UserRoutes.post("/public/users/register", UserController.registre);
  *      200:
  *        description: A successful response
  */
-UserRoutes.post("/public/users/login", UserController.login);
+UserRoutes.post("/login", UserController.login);
 
 module.exports = UserRoutes;

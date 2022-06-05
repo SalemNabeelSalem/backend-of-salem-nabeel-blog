@@ -3,14 +3,14 @@ const AuthorController = require("../controllers/author.controller");
 const AuthorRoutes = require("express").Router();
 
 /**
- * @swagger
+ * /** @swagger
  * tags:
  *   name: author
  *   description: apis for author management.
  */
 
 /**
- * @swagger
+ * /** @swagger
  * /authors:
  *  post:
  *    tags: [author]
@@ -43,12 +43,12 @@ const AuthorRoutes = require("express").Router();
 AuthorRoutes.post("/", AuthorController.create);
 
 /**
- * @swagger
+ * /** @swagger
  * /authors:
  *  get:
  *    tags: [author]
- *    summary: retreive all authors
- *    description: retreive all authors
+ *    summary: retreive all authors.
+ *    description: retreive all authors.
  *    produces:
  *      - application/json
  *    responses:
