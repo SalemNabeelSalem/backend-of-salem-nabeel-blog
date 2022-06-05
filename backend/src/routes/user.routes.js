@@ -4,10 +4,16 @@ const UserRoutes = require("express").Router();
 
 /**
  * @swagger
- * /users/register:
+ * tags:
+ *   name: user
+ *   description: apis for user management.
+ */
+
+/**
+ * @swagger
+ * /public/users/register:
  *  post:
- *    tags:
- *      - user
+ *    tags: [user]
  *    summary: user registeration.
  *    description: user registeration.
  *    consumes:
@@ -38,14 +44,13 @@ const UserRoutes = require("express").Router();
  *      200:
  *        description: A successful response
  */
-UserRoutes.post("/register", UserController.registre);
+UserRoutes.post("/public/users/register", UserController.registre);
 
 /**
  * @swagger
- * /users/login:
+ * /public/users/login:
  *  post:
- *    tags:
- *      - user
+ *    tags: [user]
  *    summary: user login.
  *    description: user login.
  *    consumes:
@@ -72,6 +77,6 @@ UserRoutes.post("/register", UserController.registre);
  *      200:
  *        description: A successful response
  */
-UserRoutes.post("/login", UserController.login);
+UserRoutes.post("/public/users/login", UserController.login);
 
 module.exports = UserRoutes;

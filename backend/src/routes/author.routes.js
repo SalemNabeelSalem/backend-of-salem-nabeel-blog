@@ -4,10 +4,16 @@ const AuthorRoutes = require("express").Router();
 
 /**
  * @swagger
+ * tags:
+ *   name: author
+ *   description: apis for author management.
+ */
+
+/**
+ * @swagger
  * /authors:
  *  post:
- *    tags:
- *      - author
+ *    tags: [author]
  *    summary: create new author.
  *    description: create new author.
  *    consumes:
@@ -40,8 +46,7 @@ AuthorRoutes.post("/", AuthorController.create);
  * @swagger
  * /authors:
  *  get:
- *    tags:
- *      - author
+ *    tags: [author]
  *    summary: retreive all authors
  *    description: retreive all authors
  *    produces:

@@ -3,9 +3,9 @@ const UserModel = require("../models/user.model");
 const {
   UserSchemaValidationWhenRegister,
   UserSchemaValidationWhenLogin,
-} = require("../middleware/user.validation");
+} = require("../middlewares/user.validation");
 
-const generateJsonWebToken = require("../middleware/jwt.validation");
+const { generateJsonWebToken } = require("../middlewares/jwt.validation");
 
 const bycript = require("bcryptjs");
 

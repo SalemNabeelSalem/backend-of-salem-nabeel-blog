@@ -6,10 +6,16 @@ TutorialRoutes.post("/", TutorialController.create);
 
 /**
  * @swagger
+ * tags:
+ *   name: tutorial
+ *   description: apis for tutorial management.
+ */
+
+/**
+ * @swagger
  * /tutorials:
  *  get:
- *    tags:
- *      - tutorial
+ *    tags: [tutorial]
  *    summary: retreive all tutorials
  *    description: retreive all tutorials
  *    produces:

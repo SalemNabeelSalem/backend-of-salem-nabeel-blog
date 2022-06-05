@@ -16,7 +16,7 @@ function generateJsonWebToken(user) {
 }
 
 function verifyJsonWebToken(req, res, next) {
-  const token = req.headers("x-authorization");
+  const token = req.headers["x-authorization"];
 
   if (!token) {
     // http status code 401: unauthorized
@@ -34,4 +34,7 @@ function verifyJsonWebToken(req, res, next) {
   }
 }
 
-module.exports = generateJsonWebToken;
+module.exports = {
+  generateJsonWebToken,
+  verifyJsonWebToken,
+};

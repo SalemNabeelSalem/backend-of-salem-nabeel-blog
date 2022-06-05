@@ -28,6 +28,7 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerSpecification = require("./configs/swagger.config");
 
 /** all routes */
+const ProtectedRoutes = require("./routes/protected.routes");
 const UserRoutes = require("./routes/user.routes");
 const TutorialRoutes = require("./routes/tutorial.routes");
 const AuthorRoutes = require("./routes/author.routes");
@@ -70,6 +71,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecification));
-app.use("/api/v1/users", UserRoutes);
+app.use("/api/v1", ProtectedRoutes);
+app.use("/api/v1", UserRoutes);
 app.use("/api/v1/tutorials", TutorialRoutes);
 app.use("/api/v1/authors", AuthorRoutes);
