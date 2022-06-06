@@ -28,29 +28,32 @@ exports.registre = async (req, res) => {
     return;
   }
 
-  let userRequest = {
+  let userRegisterRequest = {
     full_name: req.body.full_name,
     email: req.body.email,
     password: req.body.password,
   };
 
-  let userValidated = UserSchemaValidationWhenRegister.validate(userRequest);
+  let userRegisterValidated =
+    UserSchemaValidationWhenRegister.validate(userRegisterRequest);
 
-  if (userValidated.error) {
+  if (userRegisterValidated.error) {
     // http status code 400: bad request
-    res.status(400).send({ message: userValidated.error.details[0].message });
+    res
+      .status(400)
+      .send({ message: userRegisterValidated.error.details[0].message });
     return;
   }
 
   /** blueprint for a new user */
   const user = new UserModel({
-    full_name: userValidated.value.full_name,
-    email: userValidated.value.email,
-    password: userValidated.value.password,
+    full_name: userRegisterValidated.value.full_name,
+    email: userRegisterValidated.value.email,
+    password: userRegisterValidated.value.password,
   });
 
   const userExist = await UserModel.findOne({
-    email: userValidated.value.email,
+    email: userRegisterValidated.value.email,
   })
     .then((data) => {
       return data;

@@ -25,7 +25,7 @@ const morgan = require("morgan");
  * swagger documentation
  * */
 const swaggerUi = require("swagger-ui-express");
-const swaggerSpecification = require("./configs/swagger.config");
+const SwaggerSpecification = require("./configs/swagger.config");
 
 /** all routes */
 const ProtectedRoutes = require("./routes/protected.routes");
@@ -70,7 +70,7 @@ app.get("/", (req, res) => {
   res.json(response).status(200);
 });
 
-app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecification));
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(SwaggerSpecification));
 app.use("/api/v1", ProtectedRoutes);
 app.use("/api/v1/users", UserRoutes);
 app.use("/api/v1/tutorials", TutorialRoutes);
