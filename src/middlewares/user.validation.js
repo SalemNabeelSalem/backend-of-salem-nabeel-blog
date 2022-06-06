@@ -1,9 +1,10 @@
 const Joi = require("joi");
 
 const UserSchemaValidationWhenRegister = Joi.object({
-  full_name: Joi.string().trim().min(5).max(25).required(),
+  full_name: Joi.string().lowercase().trim().min(5).max(25).required(),
 
   email: Joi.string()
+    .lowercase()
     .trim()
     .email({
       minDomainSegments: 2,
@@ -21,6 +22,7 @@ const UserSchemaValidationWhenRegister = Joi.object({
 
 const UserSchemaValidationWhenLogin = Joi.object({
   email: Joi.string()
+    .lowercase()
     .trim()
     .email({
       minDomainSegments: 2,
