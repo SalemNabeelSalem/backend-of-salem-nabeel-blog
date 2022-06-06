@@ -37,8 +37,11 @@ exports.create = (req, res) => {
   tutorial
     .save()
     .then((data) => {
-      // http status code 200: ok
-      res.send(data);
+      // http status code 201: created
+      res.status(201).send({
+        message: "tutorial created successfully.",
+        data: data,
+      });
     })
     .catch((error) => {
       // http status code 500: internal server error

@@ -32,9 +32,9 @@ const AuthorSchema = mongoose.Schema(
 );
 
 AuthorSchema.method("toJSON", function () {
-  const { __v, _id, ...object } = this.toObject();
+  const { __v, _id, ...object } = this.toObject(); // remove unwanted properties
 
-  object.id = _id;
+  object.id = _id; // add id property
 
   return object;
 });

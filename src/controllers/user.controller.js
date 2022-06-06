@@ -3,7 +3,7 @@ const UserModel = require("../models/user.model");
 const {
   UserSchemaValidationWhenRegister,
   UserSchemaValidationWhenLogin,
-} = require("../middlewares/user.validation");
+} = require("../validations/user.validation");
 
 const { generateJsonWebToken } = require("../middlewares/jwt.validation");
 
@@ -73,8 +73,10 @@ exports.registre = async (req, res) => {
     return;
   }
 
-  // hash the password
+  // 10 is the number of rounds to use for the hashing algorithm
   const salt = await bycript.genSalt(10);
+
+  // hashedPassword is the password after hashing
   const hashedPassword = await bycript.hash(user.password, salt);
 
   user.password = hashedPassword;
@@ -88,8 +90,14 @@ exports.registre = async (req, res) => {
       // exclude password from the response
       data.password = undefined;
 
-      // http status code 200: ok
-      res.send(data);
+      // generate jwt token
+      const token = generateJsonWebToken(data);
+
+      // http status code 201: created
+      res.status(201).header("x-authorization", token).send({
+        message: "user created successfully.",
+        data: data,
+      });
     })
     .catch((error) => {
       // http status code 500: internal server error
