@@ -5,7 +5,7 @@ const {
   UserSchemaValidationWhenLogin,
 } = require("../validations/user.validation");
 
-const { generateJsonWebToken } = require("../middlewares/jwt.validation");
+const { generateJsonWebToken } = require("../utils/jwt.util");
 
 const bycript = require("bcryptjs");
 

@@ -1,20 +1,5 @@
 const jwt = require("jsonwebtoken");
 
-function generateJsonWebToken(user) {
-  const token = jwt.sign(
-    {
-      _id: user._id,
-      full_name: user.full_name,
-      email: user.email,
-    },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: process.env.JWT_EXPIRES_IN,
-    }
-  );
-  return token;
-}
-
 function verifyJsonWebToken(req, res, next) {
   const token = req.headers["x-authorization"];
 
@@ -35,6 +20,5 @@ function verifyJsonWebToken(req, res, next) {
 }
 
 module.exports = {
-  generateJsonWebToken,
   verifyJsonWebToken,
 };

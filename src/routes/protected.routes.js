@@ -1,6 +1,6 @@
 const ProtectedRoutes = require("express").Router();
 
-const { verifyJsonWebToken } = require("../middlewares/jwt.validation");
+const { verifyJsonWebToken } = require("../middlewares/auth.middleware");
 
 /**
  * @swagger
