@@ -19,6 +19,17 @@ function verifyJsonWebToken(req, res, next) {
   }
 }
 
+function isAdmin(req, res, next) {
+  if (req.user.role !== "admin") {
+    // http status code 403: forbidden
+    res.status(403).send({ message: "you are not authorized." });
+    return;
+  }
+
+  next();
+}
+
 module.exports = {
   verifyJsonWebToken,
+  isAdmin,
 };

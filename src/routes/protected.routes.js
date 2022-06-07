@@ -1,6 +1,9 @@
 const ProtectedRoutes = require("express").Router();
 
-const { verifyJsonWebToken } = require("../middlewares/auth.middleware");
+const {
+  verifyJsonWebToken,
+  isAdmin,
+} = require("../middlewares/auth.middleware");
 
 /**
  * @swagger
@@ -24,7 +27,7 @@ const { verifyJsonWebToken } = require("../middlewares/auth.middleware");
  *      200:
  *        description: A successful response
  */
-ProtectedRoutes.get("/dashboard", verifyJsonWebToken, (req, res) => {
+ProtectedRoutes.get("/dashboard", [verifyJsonWebToken, isAdmin], (req, res) => {
   res.json({ message: "this is a dashboard." }).status(200);
 });
 
