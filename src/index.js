@@ -2,6 +2,11 @@ require("dotenv").config({
   path: ".env.production.local",
 });
 
+/**
+ * to handle async errors in express
+ * */
+require("express-async-errors");
+
 require("./configs/mongodb.config");
 
 const express = require("express");
