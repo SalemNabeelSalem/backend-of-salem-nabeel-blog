@@ -12,14 +12,14 @@ require("./configs/mongodb.config");
 const express = require("express");
 
 /**
- * a middleware that allows cross-origin requests.
- * */
-const cros = require("cors");
-
-/**
  * a middleware that helps secure your express apps by setting various http headers.
  * */
 const helmet = require("helmet");
+
+/**
+ * a middleware that allows cross-origin requests.
+ * */
+const cros = require("cors");
 
 /**
  * a middleware for logging http requests.
@@ -49,13 +49,6 @@ const app = express();
 const PORT = process.env.EXPRESS_SERVER_PORT || 5000;
 
 /**
- * cors -> cross-origin resource sharing
- *
- * enable all cors requests
- * */
-app.use(cros());
-
-/**
  * parse requests of content-type - application/json
  * */
 app.use(express.json());
@@ -69,6 +62,13 @@ app.use(express.urlencoded({ extended: true }));
  * secure your express application by setting various http headers.
  * */
 app.use(helmet());
+
+/**
+ * cors -> cross-origin resource sharing
+ *
+ * enable all cors requests
+ * */
+app.use(cros());
 
 /**
  * log http requests on the console.
