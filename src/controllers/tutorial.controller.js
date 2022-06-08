@@ -53,6 +53,8 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
+  // TODO: try to use pagination when fetching all tutorials
+
   let title = req.query.title;
 
   /** retrieve all tutorials with a title containing the search term */

@@ -100,6 +100,8 @@ const basicAuth = expressBasicAuth({
   }),
 });
 
+// TODO: handle 404 error
+
 app.use(
   "/api/docs",
   basicAuth,

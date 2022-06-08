@@ -39,6 +39,8 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
+  // TODO: try to use pagination when fetching all authors
+
   /** retrieve all authors from the database */
   AuthorModel.find()
     .sort({ created_at: -1 }) // -1 for descending order
