@@ -72,7 +72,7 @@ exports.findAll = (req, res) => {
       .select("id title description section author created_at") // select only the fields that we need
       .then((tutorials) => {
         // http status code 200: ok
-        res.send(tutorials).status(200);
+        res.status(200).send(tutorials);
       })
       .catch((error) => {
         // http status code 500: internal server error
@@ -102,10 +102,10 @@ exports.findAll = (req, res) => {
       .sort({ created_at: -1 }) // -1 for descending order
       .then((tutorials) => {
         // http status code 200: ok
-        res.send({
+        res.status(200).send({
           count: tutorials.length,
           tutorials,
-        }).status(200);
+        });
       })
       .catch((error) => {
         // http status code 500: internal server error
@@ -132,7 +132,7 @@ exports.findOne = (req, res) => {
         res.status(404).send({ message: "tutorial not found with id: " + id });
       } else {
         // http status code 200: ok
-        res.send(tutorial);
+        res.status(200).send(tutorial);
       }
     })
     .catch((error) => {
@@ -179,7 +179,7 @@ exports.update = (req, res) => {
         });
       } else {
         // http status code 200: ok
-        res.send(tutorial);
+        res.status(200).send(tutorial);
       }
     })
     .catch((error) => {
@@ -203,7 +203,7 @@ exports.delete = (req, res) => {
         });
       } else {
         // http status code 200: ok
-        res.send({
+        res.status(200).send({
           message: `tutorial with id = [${id}] was deleted successfully!`,
         });
       }

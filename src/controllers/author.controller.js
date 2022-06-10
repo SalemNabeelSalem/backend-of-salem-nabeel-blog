@@ -46,7 +46,7 @@ exports.findAll = (req, res) => {
     .sort({ created_at: -1 }) // -1 for descending order
     .then((authors) => {
       // http status code 200: ok
-      res.send({
+      res.status(200).send({
         count: authors.length,
         authors: authors,
       });
