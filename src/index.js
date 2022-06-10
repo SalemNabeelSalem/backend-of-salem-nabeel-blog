@@ -46,7 +46,7 @@ const TutorialRoutes = require("./routes/tutorial.routes");
 const AuthorRoutes = require("./routes/author.routes");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.EXPRESS_PORT || 3000;
 
 /**
  * parse requests of content-type - application/json
