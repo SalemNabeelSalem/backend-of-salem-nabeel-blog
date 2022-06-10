@@ -72,7 +72,7 @@ exports.findAll = (req, res) => {
       .select("id title description section author created_at") // select only the fields that we need
       .then((tutorials) => {
         // http status code 200: ok
-        res.send(tutorials);
+        res.send(tutorials).status(200);
       })
       .catch((error) => {
         // http status code 500: internal server error
@@ -105,7 +105,7 @@ exports.findAll = (req, res) => {
         res.send({
           count: tutorials.length,
           tutorials,
-        });
+        }).status(200);
       })
       .catch((error) => {
         // http status code 500: internal server error
