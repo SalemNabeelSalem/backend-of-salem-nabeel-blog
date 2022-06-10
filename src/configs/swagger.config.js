@@ -8,7 +8,11 @@ const swaggerOptions = {
       description: "Demonstrating how to describe a RESTful API with Swagger.",
     },
 
-    host: "localhost:5000",
+    // host: "localhost:5000",
+
+    host: "backend-of-salem-nabeel-blog.herokuapp.com",
+
+    schemes: ["http", "https"],
 
     basePath: "/api/v1",
 
