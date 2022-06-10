@@ -34,7 +34,7 @@ const logger = winston.createLogger({
     }),
 
     new winston.transports.MongoDB({
-      db: "mongodb+srv://salem_nabeel_salem:yM5VBnmRxMPBPA3@learningcluster.mvowf.mongodb.net/ecommerce_db",
+      db: process.env.MONGO_DB_URI,
       collection: "logs",
       options: {
         useNewUrlParser: true,
